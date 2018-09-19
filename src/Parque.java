@@ -1,7 +1,6 @@
 import java.util.concurrent.Semaphore;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Pane;
 public class Parque {
