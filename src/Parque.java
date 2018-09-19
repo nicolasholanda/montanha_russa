@@ -24,4 +24,6 @@ public class Parque {
         this.passageiros[qtd_passageiros] = p;
         this.passageiros[qtd_passageiros].start();
     }
+    
+    
 }

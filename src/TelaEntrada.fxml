@@ -11,9 +11,9 @@
 <Pane fx:id="ancPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="701.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="TelaEntradaController">
    <children>
       <TextArea fx:id="txtLog" editable="false" focusTraversable="false" layoutX="8.0" layoutY="541.0" prefHeight="84.0" prefWidth="327.0" />
-      <Button fx:id="btAddPassageiro" layoutX="422.0" layoutY="597.0" mnemonicParsing="false" onAction="#addPassageiro" text="Criar Pessoa" />
-      <TextField fx:id="txtTempoEmbarque" layoutX="422.0" layoutY="572.0" prefHeight="25.0" prefWidth="81.0" promptText="Embarque" />
-      <TextField fx:id="txtTempoDesembarque" layoutX="422.0" layoutY="541.0" prefHeight="25.0" prefWidth="81.0" promptText="Desembarque" />
+      <Button fx:id="btAddPassageiro" disable="true" layoutX="422.0" layoutY="597.0" mnemonicParsing="false" onAction="#addPassageiro" text="Criar Pessoa" />
+      <TextField fx:id="txtTempoEmbarque" disable="true" layoutX="422.0" layoutY="572.0" prefHeight="25.0" prefWidth="81.0" promptText="Embarque" />
+      <TextField fx:id="txtTempoDesembarque" disable="true" layoutX="422.0" layoutY="541.0" prefHeight="25.0" prefWidth="81.0" promptText="Desembarque" />
       <Pane fx:id="ancMapa" layoutY="2.0" onMouseMoved="#printaPosicao" prefHeight="539.0" prefWidth="701.0">
          <children>
             <ImageView fx:id="imgParque" fitHeight="555.0" fitWidth="701.0" onMouseMoved="#printaPosicao" pickOnBounds="true" preserveRatio="true">

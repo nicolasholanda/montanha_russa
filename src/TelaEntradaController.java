@@ -158,6 +158,10 @@ public class TelaEntradaController implements Initializable {
         imgs_vagao[cap_max-1].setLayoutY(10.0);
         imgs_vagao[cap_max-1].setVisible(true);
         parque.cria_vagao(cap_max, tempo, ancVagao, txtLog);
+        btAddPassageiro.setDisable(false);
+        txtTempoEmbarque.setDisable(false);
+        txtTempoDesembarque.setDisable(false);
+        btAddVagao.setDisable(true);
     }
     
     public void logMensagem(String msg){
