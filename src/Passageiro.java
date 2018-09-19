@@ -221,6 +221,11 @@ public class Passageiro extends Thread {
             entrar_na_fila();
 	}
 	
+        private void mySleep(int tempo){
+            long tempoAtual = System.currentTimeMillis();
+            while()
+        }
+        
 	private void CurtirViagem() throws InterruptedException
 	{
                 boolean state;
