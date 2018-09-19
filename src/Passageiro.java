@@ -223,31 +223,19 @@ public class Passageiro extends Thread {
 
 	private void CurtirViagem() throws InterruptedException
 	{
-                int tempo = 20;
-                int i=0;
-                long tempoInicial = System.currentTimeMillis(), tempoMedido=0, tempoAtual=0;
-		while( vagao.EmViagem == 1){ 
-                    Platform.runLater(()->{
-                        img.setScaleX(0.8);
-                        img.setScaleY(0.8);
-                    });
-                    while(tempoAtual < tempo){
-                        while(tempoAtual == tempoMedido){
-                            tempoMedido=(System.currentTimeMillis()-tempoInicial);
-                        }
-                        tempoAtual = tempoMedido;
-                    }
-                    Platform.runLater(()->{
-                        img.setScaleX(1);
-                        img.setScaleY(1);
-                    });
-                    while(tempoAtual < tempo){
-                        while(tempoAtual == tempoMedido){
-                            tempoMedido=(System.currentTimeMillis()-tempoInicial);
-                        }
-                        tempoAtual = tempoMedido;
-                    }
-                }
+            int tempo = 300;
+            while( vagao.EmViagem == 1){ 
+                Platform.runLater(()->{
+                    img.setScaleX(0.8);
+                    img.setScaleY(0.8);
+                });
+                Parque.mySleep(100);
+                Platform.runLater(()->{
+                    img.setScaleX(1);
+                    img.setScaleY(1);
+                });
+                Parque.mySleep(100);
+            }
 	}
 	
 	

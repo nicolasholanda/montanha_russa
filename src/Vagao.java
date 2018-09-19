@@ -46,49 +46,47 @@ public class Vagao extends Thread
             });
         }
         
+	private static void mySleep(int tempo){
+            long tempoInicial = System.currentTimeMillis(), tempoMedido=0, tempoAtual=0;
+            while(tempoAtual < tempo){
+                while(tempoAtual == tempoMedido){
+                    tempoMedido=(System.currentTimeMillis()-tempoInicial)/10;
+                }
+                tempoAtual = tempoMedido;
+            }
+        }
+        
 	private void ExecutaViagem() throws InterruptedException
 	{   
-            move_trem1 = new PathTransition();
-            move_trem1.setNode(ancVagao);
-            move_trem1.setDuration( Duration.seconds( TempoViagem/2 ) );
             
-            move_trem2 = new PathTransition();
-            move_trem2.setNode(ancVagao);
-            move_trem2.setDuration( Duration.seconds( TempoViagem/2 ) );
-            
-            Polyline line = new Polyline(
-                xInicial-30, yInicial-30,
-                xInicial + 500, yInicial-30
-            );
-            Polyline line2 = new Polyline(
-                xInicial-500, yInicial-30,
-                xInicial-30, yInicial-30
-            );
-            this.move_trem1.setPath(line);
-            this.move_trem2.setPath(line2);
+            int tempo=1500;
             SemLog.acquire();
             logMensagem("Vagão partindo.");
             SemLog.release();
-            
-
-            this.move_trem1.play();
-            
-            while(move_trem1.getStatus() == Animation.Status.RUNNING){
-                //código qualquer cpu bound
-                System.out.println(move_trem1.getStatus());
+            EmViagem=1;
+            while(tempo !=0){
+                if(ancVagao.getLayoutX() != xInicial+500){
+                    ancVagao.setLayoutX( ancVagao.getLayoutX() + 1);
+                }
+                mySleep(1);
+                tempo--;
             }
+            tempo=1500;
+            ancVagao.setLayoutX(xInicial-500);
             
-            this.move_trem2.play();
-            
-            while(move_trem2.getStatus() == Animation.Status.RUNNING){
-                //código qualquer cpu bound
-                System.out.println(move_trem2.getStatus());
+            while(tempo !=0){
+                if(ancVagao.getLayoutX() != xInicial){
+                    ancVagao.setLayoutX( ancVagao.getLayoutX() + 1 );
+                }
+                mySleep(1);
+                tempo--;
             }
-            
+            EmViagem = 0;
+            ancVagao.setLayoutX(xInicial);
             SemLog.acquire();
             logMensagem("Vagão chegou.");
             SemLog.release();
-	}
+        }
 	
 	
 	@Override

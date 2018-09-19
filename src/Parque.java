@@ -12,6 +12,15 @@ public class Parque {
     Semaphore SemLog = new Semaphore(1);
     Vagao vagao;
     
+    public static void mySleep(int tempo){
+        long tempoInicial = System.currentTimeMillis(), tempoMedido=0, tempoAtual=0;
+        while(tempoAtual < tempo){
+            while(tempoAtual == tempoMedido){
+                tempoMedido=(System.currentTimeMillis()-tempoInicial);
+            }
+            tempoAtual = tempoMedido;
+        }
+    }
     
     public void cria_vagao(int cap_max, int tempo_viagem, Pane ancVagao, TextArea txtLog){
         this.vagao = new Vagao(cap_max, tempo_viagem, SemVagao, Mutex, ancVagao, SemLog, txtLog);
