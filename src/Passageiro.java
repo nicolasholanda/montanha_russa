@@ -22,6 +22,7 @@ public class Passageiro extends Thread {
         ImageView img;
         Pane ancVagao;
         Pane ancMapa;
+        int banco;
         
 	
 	public Passageiro(String nome, int TempoEmbarque, int TempoDesembarque,
@@ -41,6 +42,7 @@ public class Passageiro extends Thread {
                 this.img = imgPassageiro;
                 this.ancVagao = ancVagao;
                 this.ancMapa = ancMapa;
+                this.banco = banco;
 	}
         
         private void logMensagem(String msg){
@@ -84,7 +86,7 @@ public class Passageiro extends Thread {
         
         private void embarque_para_vagao(){
             int dif, aux, dif2;
-            
+            this.banco = vagao.CadeirasOcupadas;
             if(Integer.parseInt(nome) <= 4 ){
                 aux = Integer.parseInt(nome);
                 dif = -40;
@@ -103,8 +105,8 @@ public class Passageiro extends Thread {
             
             Polyline line = new Polyline(
                 60+42*(aux+dif2), -210-42*3,
-                60+42*(aux+dif2-vagao.CadeirasOcupadas)-vagao.CadeirasOcupadas*3, -210-42*3,
-                60+42*(aux+dif2-vagao.CadeirasOcupadas)-vagao.CadeirasOcupadas*3, -210-42*4
+                60+42*(aux+dif2-banco)-banco*3, -210-42*3,
+                60+42*(aux+dif2-banco)-banco*3, -210-42*4
             );
             entra_fila.setPath(line);
             entra_fila.play();
@@ -201,8 +203,8 @@ public class Passageiro extends Thread {
             entra_fila.setDuration( Duration.seconds( TempoDesembarque ) );
             
             Polyline line = new Polyline(
-                60+42*(aux+dif2-vagao.CadeirasOcupadas)-vagao.CadeirasOcupadas*3, -210-42*4,
-                60+42*(aux+dif2-vagao.CadeirasOcupadas)-vagao.CadeirasOcupadas*3, -210-42*3,
+                60+42*(aux+dif2-banco)-banco*3, -210-42*4,
+                60+42*(aux+dif2-banco)-banco*3, -210-42*3,
                 20, -210-42*3,
                 20, -210,
                 60, -210
