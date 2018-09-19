@@ -117,7 +117,6 @@ public class Passageiro extends Thread {
                 img.setX(-188);
                 img.setY(-70);
             });
-
             logMensagem( "X: "+Double.toString(img.getX()) +" Y: "+ Double.toString(img.getY()) );
         }
         
@@ -148,6 +147,8 @@ public class Passageiro extends Thread {
             while(entra_fila.getStatus() == Animation.Status.RUNNING){
                 System.out.println(entra_fila.getStatus());
             }
+            //img.setX(-100+60+42*aux);
+            //img.setY(-100-210+dif);
         }
         
         private void entrada_p_fila(){
@@ -215,6 +216,8 @@ public class Passageiro extends Thread {
             while(entra_fila.getStatus() == Animation.Status.RUNNING){
                 System.out.println(entra_fila.getStatus());
             }
+            img.setX(0);
+            img.setY(0);
             entrar_na_fila();
 	}
 	
@@ -223,7 +226,6 @@ public class Passageiro extends Thread {
                 boolean state;
 		while( vagao.EmViagem == 1){ 
                     System.out.println("curtindo");
-                    this.sleep(100);
                 }
 	}
 	
@@ -237,12 +239,13 @@ public class Passageiro extends Thread {
                 
 		while(true)
 		{
+                        //img.setX(0);
+                        //img.setY(0);
 			try
 			{
                                 SemLog.acquire();
                                 logMensagem(this.nome+" está na fila");
                                 SemLog.release();
-                                
 				this.SemaforoPassageiro.acquire();
 				this.SemaforoMutex.acquire();
 				this.Embarca();
@@ -284,7 +287,6 @@ public class Passageiro extends Thread {
 					this.SemaforoPassageiro.release(this.vagao.Capacidade);
 				}
 				this.SemaforoMutex.release();
-				
 			}
 			catch(InterruptedException exc)
 			{
