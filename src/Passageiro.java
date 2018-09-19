@@ -225,21 +225,27 @@ public class Passageiro extends Thread {
 	{
                 int tempo = 20;
                 int i=0;
-                long tempoAtual = System.currentTimeMillis();
+                long tempoInicial = System.currentTimeMillis(), tempoMedido=0, tempoAtual=0;
 		while( vagao.EmViagem == 1){ 
                     Platform.runLater(()->{
                         img.setScaleX(0.8);
                         img.setScaleY(0.8);
                     });
-                    while( !(System.currentTimeMillis() <= tempoAtual+tempo+10 && System.currentTimeMillis() >= tempoAtual+tempo ) ){
-                        i++;
+                    while(tempoAtual < tempo){
+                        while(tempoAtual == tempoMedido){
+                            tempoMedido=(System.currentTimeMillis()-tempoInicial);
+                        }
+                        tempoAtual = tempoMedido;
                     }
                     Platform.runLater(()->{
                         img.setScaleX(1);
                         img.setScaleY(1);
                     });
-                    while(!(System.currentTimeMillis() <= tempoAtual+tempo+10 && System.currentTimeMillis() >= tempoAtual+tempo )){
-                        i++;
+                    while(tempoAtual < tempo){
+                        while(tempoAtual == tempoMedido){
+                            tempoMedido=(System.currentTimeMillis()-tempoInicial);
+                        }
+                        tempoAtual = tempoMedido;
                     }
                 }
 	}
