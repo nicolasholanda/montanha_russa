@@ -94,11 +94,6 @@ public class TelaEntradaController implements Initializable {
     @FXML
     private Button btAddVagao;
     
-    @FXML
-    private Label lblX;
-    
-    @FXML
-    private Label lblY;
     
     
     private final ImageView imgs_vagao[] = new ImageView[5];
@@ -125,13 +120,6 @@ public class TelaEntradaController implements Initializable {
     }
     
     
-    @FXML
-    private void printaPosicao(MouseEvent event){
-        String x = Double.toString( event.getX() );
-        String y = Double.toString( event.getY() );
-        lblX.setText("X: "+x);
-        lblY.setText("Y: "+y);
-    }
     
     @FXML
     private void addPassageiro(){

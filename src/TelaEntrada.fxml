@@ -14,9 +14,9 @@
       <Button fx:id="btAddPassageiro" disable="true" layoutX="422.0" layoutY="597.0" mnemonicParsing="false" onAction="#addPassageiro" text="Criar Pessoa" />
       <TextField fx:id="txtTempoEmbarque" disable="true" layoutX="422.0" layoutY="572.0" prefHeight="25.0" prefWidth="81.0" promptText="Embarque" />
       <TextField fx:id="txtTempoDesembarque" disable="true" layoutX="422.0" layoutY="541.0" prefHeight="25.0" prefWidth="81.0" promptText="Desembarque" />
-      <Pane fx:id="ancMapa" layoutY="2.0" onMouseMoved="#printaPosicao" prefHeight="539.0" prefWidth="701.0">
+      <Pane fx:id="ancMapa" layoutY="2.0" prefHeight="539.0" prefWidth="701.0">
          <children>
-            <ImageView fx:id="imgParque" fitHeight="555.0" fitWidth="701.0" onMouseMoved="#printaPosicao" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgParque" fitHeight="555.0" fitWidth="701.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@imagens/parque.png" />
                </image>
@@ -102,7 +102,5 @@
       <TextField fx:id="txtTempoViagem" layoutX="335.0" layoutY="541.0" prefHeight="25.0" prefWidth="81.0" promptText="Viagem" />
       <TextField fx:id="txtCapacidade" layoutX="335.0" layoutY="572.0" prefHeight="25.0" prefWidth="81.0" promptText="Capacidade" />
       <Button fx:id="btAddVagao" layoutX="335.0" layoutY="597.0" mnemonicParsing="false" onAction="#addVagao" prefHeight="25.0" prefWidth="81.0" text="Criar Vagão" />
-      <Label fx:id="lblX" layoutX="537.0" layoutY="545.0" text="Label" textFill="WHITE" />
-      <Label fx:id="lblY" layoutX="537.0" layoutY="576.0" text="Label" textFill="WHITE" />
    </children>
 </Pane>
