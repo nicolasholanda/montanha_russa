@@ -220,26 +220,27 @@ public class Passageiro extends Thread {
             img.setScaleY(1);
             entrar_na_fila();
 	}
-	
-        private void mySleep(int tempo){
-            long tempoAtual = System.currentTimeMillis();
-            while()
-        }
-        
+
 	private void CurtirViagem() throws InterruptedException
 	{
-                boolean state;
+                int tempo = 20;
+                int i=0;
+                long tempoAtual = System.currentTimeMillis();
 		while( vagao.EmViagem == 1){ 
                     Platform.runLater(()->{
                         img.setScaleX(0.8);
                         img.setScaleY(0.8);
                     });
-                    sleep(100);
+                    while( !(System.currentTimeMillis() <= tempoAtual+tempo+10 && System.currentTimeMillis() >= tempoAtual+tempo ) ){
+                        i++;
+                    }
                     Platform.runLater(()->{
                         img.setScaleX(1);
                         img.setScaleY(1);
                     });
-                    sleep(100);
+                    while(!(System.currentTimeMillis() <= tempoAtual+tempo+10 && System.currentTimeMillis() >= tempoAtual+tempo )){
+                        i++;
+                    }
                 }
 	}
 	
