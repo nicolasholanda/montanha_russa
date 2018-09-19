@@ -218,6 +218,8 @@ public class Passageiro extends Thread {
             }
             img.setX(0);
             img.setY(0);
+            img.setScaleX(1);
+            img.setScaleY(1);
             entrar_na_fila();
 	}
 	
@@ -225,7 +227,16 @@ public class Passageiro extends Thread {
 	{
                 boolean state;
 		while( vagao.EmViagem == 1){ 
-                    System.out.println("curtindo");
+                    Platform.runLater(()->{
+                        img.setScaleX(0.8);
+                        img.setScaleY(0.8);
+                    });
+                    sleep(100);
+                    Platform.runLater(()->{
+                        img.setScaleX(1);
+                        img.setScaleY(1);
+                    });
+                    sleep(100);
                 }
 	}
 	
