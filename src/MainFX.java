@@ -19,6 +19,7 @@ public class MainFX extends Application {
         Scene scene = new Scene(root);
         
         stage.setResizable(false);
+        stage.setWidth(705.0);
         stage.setTitle("Problema da Montanha Russa");
         stage.setScene(scene);
         stage.show();
