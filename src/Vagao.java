@@ -65,6 +65,7 @@ public class Vagao extends Thread
             logMensagem("Vagão partindo.");
             SemLog.release();
             
+
             this.move_trem1.play();
             
             while(move_trem1.getStatus() == Animation.Status.RUNNING){

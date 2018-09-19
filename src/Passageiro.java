@@ -5,7 +5,6 @@ import javafx.animation.PathTransition;
 import javafx.application.Platform;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polyline;
 import javafx.util.Duration;
@@ -23,7 +22,6 @@ public class Passageiro extends Thread {
         ImageView img;
         Pane ancVagao;
         Pane ancMapa;
-        private int flag =0;
         
 	
 	public Passageiro(String nome, int TempoEmbarque, int TempoDesembarque,
@@ -31,7 +29,6 @@ public class Passageiro extends Thread {
                 Semaphore SemVagao, Semaphore SemLog, TextArea txtLog, ImageView imgPassageiro, 
                 Pane ancVagao, Pane ancMapa) 
 	{
-		// TODO Auto-generated constructor stub
 		this.vagao=vagao;
 		this.TempoEmbarque=TempoEmbarque;
 		this.TempoDesembarque=TempoDesembarque;
@@ -44,7 +41,6 @@ public class Passageiro extends Thread {
                 this.img = imgPassageiro;
                 this.ancVagao = ancVagao;
                 this.ancMapa = ancMapa;
-                this.flag =0;
 	}
         
         private void logMensagem(String msg){
@@ -118,10 +114,10 @@ public class Passageiro extends Thread {
             
             Platform.runLater(() -> {
                 ancVagao.getChildren().add(img);
+                img.setX(-188);
+                img.setY(-70);
             });
 
-            img.setX(-188);
-            img.setY(-70);
             logMensagem( "X: "+Double.toString(img.getX()) +" Y: "+ Double.toString(img.getY()) );
         }
         
@@ -171,9 +167,6 @@ public class Passageiro extends Thread {
             while(fila_inicio.getStatus() == Animation.Status.RUNNING){
                 System.out.println(fila_inicio.getStatus());
             }
-            //logMensagem( "Depois X: "+img.getLayoutX()+" Y: "+img.getLayoutY() );
-            //img.setX(0);
-            //img.setY(0);
             entrar_na_fila();
         }
 	
@@ -184,10 +177,6 @@ public class Passageiro extends Thread {
             Platform.runLater(()->{
                 ancMapa.getChildren().remove(img);
             });
-            
-            //img.setX(-188);
-            //img.setY(-70);
-            
 	}
 	
 	private void Desembarque()
@@ -233,11 +222,8 @@ public class Passageiro extends Thread {
 	{
                 boolean state;
 		while( vagao.EmViagem == 1){ 
-                    //this.sleep(10);
                     System.out.println("curtindo");
-                   //state = img.isVisible();
-                   //img.setVisible( !state );
-                   //this.sleep(8);
+                    this.sleep(100);
                 }
 	}
 	
@@ -256,25 +242,22 @@ public class Passageiro extends Thread {
                                 SemLog.acquire();
                                 logMensagem(this.nome+" está na fila");
                                 SemLog.release();
-                                System.out.println("pog");
                                 
 				this.SemaforoPassageiro.acquire();
 				this.SemaforoMutex.acquire();
 				this.Embarca();
-                                //img.setX(-188);
-                                //img.setY(-70);
+                                
                                 this.vagao.CadeirasOcupadas++;
-                                System.out.println("pog");
-                                /*SemLog.acquire();
+                                SemLog.acquire();
                                 logMensagem(this.nome+" embarcou.");
-                                SemLog.release();*/
+                                SemLog.release();
                                 
 				if(this.vagao.CadeirasOcupadas<this.vagao.Capacidade)
 				{
 					this.SemaforoMutex.release();
-					/*SemLog.acquire();
+					SemLog.acquire();
                                         logMensagem(this.nome+" aguarda no vagão.");
-                                        SemLog.release();*/
+                                        SemLog.release();
 					this.SemaforoVagao.acquire();
 				}
 				else
@@ -286,16 +269,16 @@ public class Passageiro extends Thread {
                                         SemLog.release();
 					this.SemaforoVagao.release(this.vagao.Capacidade);
 				}
-                                /*SemLog.acquire();
+                                SemLog.acquire();
                                 logMensagem(this.nome+" curtindo a viagem");
-                                SemLog.release();*/
+                                SemLog.release();
                                 this.CurtirViagem();
 				this.SemaforoMutex.acquire();
 				this.vagao.CadeirasOcupadas--;
 				this.Desembarque();
-                                /*SemLog.acquire();
+                                SemLog.acquire();
                                 logMensagem(this.nome+" desembarcou.");
-                                SemLog.release();*/
+                                SemLog.release();
 				if(this.vagao.CadeirasOcupadas==0)
 				{
 					this.SemaforoPassageiro.release(this.vagao.Capacidade);
