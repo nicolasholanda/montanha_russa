@@ -129,6 +129,9 @@ public class TelaEntradaController implements Initializable {
             int tempo_embarque = Integer.parseInt( txtTempoEmbarque.getText() );
             int tempo_desembarque = Integer.parseInt( txtTempoDesembarque.getText() );
             parque.cria_passageiro(nome, tempo_embarque, tempo_desembarque, txtLog, imgs_passageiros[parque.qtd_passageiros-1], ancVagao, ancMapa);
+            if(parque.qtd_passageiros == 9){
+                btAddPassageiro.setDisable(true);
+            }
         }
         else{
             logMensagem("Instancie um vagão primeiro.");

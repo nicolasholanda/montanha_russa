@@ -117,7 +117,6 @@ public class Passageiro extends Thread {
                 img.setX(-188);
                 img.setY(-70);
             });
-            logMensagem( "X: "+Double.toString(img.getX()) +" Y: "+ Double.toString(img.getY()) );
         }
         
         private void entrar_na_fila(){
@@ -147,8 +146,6 @@ public class Passageiro extends Thread {
             while(entra_fila.getStatus() == Animation.Status.RUNNING){
                 System.out.println(entra_fila.getStatus());
             }
-            //img.setX(-100+60+42*aux);
-            //img.setY(-100-210+dif);
         }
         
         private void entrada_p_fila(){
@@ -157,7 +154,6 @@ public class Passageiro extends Thread {
             PathTransition fila_inicio = new PathTransition();
             fila_inicio.setNode(img);
             fila_inicio.setDuration( Duration.seconds( 1 ) );
-            //fila_inicio.setCycleCount(0);
             Polyline line = new Polyline(
                 20, 0,
                 20, -210,
@@ -250,8 +246,6 @@ public class Passageiro extends Thread {
                 
 		while(true)
 		{
-                        //img.setX(0);
-                        //img.setY(0);
 			try
 			{
                                 SemLog.acquire();
