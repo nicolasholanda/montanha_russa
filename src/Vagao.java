@@ -19,6 +19,7 @@ public class Vagao extends Thread
         public Pane ancVagao;
         public TextArea txtLog;
         PathTransition move_trem1;
+        PathTransition move_trem2;
         double xInicial;
         double yInicial;
 	
@@ -49,18 +50,22 @@ public class Vagao extends Thread
 	{   
             move_trem1 = new PathTransition();
             move_trem1.setNode(ancVagao);
-            move_trem1.setDuration( Duration.seconds( TempoViagem ) );
-            move_trem1.setCycleCount(1);
+            move_trem1.setDuration( Duration.seconds( TempoViagem/2 ) );
+            
+            move_trem2 = new PathTransition();
+            move_trem2.setNode(ancVagao);
+            move_trem2.setDuration( Duration.seconds( TempoViagem/2 ) );
             
             Polyline line = new Polyline(
                 xInicial-30, yInicial-30,
-                xInicial + 500, yInicial-30,
-                xInicial + 500, yInicial-200,
-                xInicial-800, yInicial-200,
-                xInicial-800, yInicial-30,
-                xInicial -30, yInicial-30
+                xInicial + 500, yInicial-30
+            );
+            Polyline line2 = new Polyline(
+                xInicial-500, yInicial-30,
+                xInicial-30, yInicial-30
             );
             this.move_trem1.setPath(line);
+            this.move_trem2.setPath(line2);
             SemLog.acquire();
             logMensagem("Vagão partindo.");
             SemLog.release();
@@ -72,6 +77,14 @@ public class Vagao extends Thread
                 //código qualquer cpu bound
                 System.out.println(move_trem1.getStatus());
             }
+            
+            this.move_trem2.play();
+            
+            while(move_trem2.getStatus() == Animation.Status.RUNNING){
+                //código qualquer cpu bound
+                System.out.println(move_trem2.getStatus());
+            }
+            
             SemLog.acquire();
             logMensagem("Vagão chegou.");
             SemLog.release();
