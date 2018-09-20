@@ -58,21 +58,24 @@ public class Vagao extends Thread
         
 	private void ExecutaViagem() throws InterruptedException
 	{   
+            int tempo=0;
             EmViagem = 1;
-            while(ancVagao.getLayoutX() != xInicial+500 && EmViagem==1){
+            while(tempo<500){
                 Platform.runLater(()->{
                     ancVagao.setLayoutX( ancVagao.getLayoutX() + 1 );
                 });
                 mySleep(TempoViagem);
+                tempo++;
             }
 
             ancVagao.setLayoutX(xInicial-500);
-            
-            while(ancVagao.getLayoutX()!=xInicial){
+            tempo=0;
+            while(tempo<500){
                 Platform.runLater(()->{
                     ancVagao.setLayoutX( ancVagao.getLayoutX() + 1 );
                 });
                 mySleep(TempoViagem);
+                tempo++;
             }
             ancVagao.setLayoutX(xInicial);
             EmViagem=0;
