@@ -13,7 +13,7 @@ public class Vagao extends Thread
 	public Semaphore SemaforoMutex;
         public Semaphore SemLog;
 	public int Capacidade;
-	public long TempoViagem;
+	public int TempoViagem;
 	public int EmViagem;
 	public int CadeirasOcupadas;
         public Pane ancVagao;
@@ -23,7 +23,7 @@ public class Vagao extends Thread
         double xInicial;
         double yInicial;
 	
-	public Vagao(int Capacidade, long TempoViagem, Semaphore Vagao, Semaphore Mutex, Pane ancVagao, Semaphore SemLog, TextArea txtLog) 
+	public Vagao(int Capacidade, int TempoViagem, Semaphore Vagao, Semaphore Mutex, Pane ancVagao, Semaphore SemLog, TextArea txtLog) 
 	{
 		// TODO Auto-generated constructor stub
 		this.Capacidade=Capacidade;
@@ -50,7 +50,7 @@ public class Vagao extends Thread
             long tempoInicial = System.currentTimeMillis(), tempoMedido=0, tempoAtual=0;
             while(tempoAtual < tempo){
                 while(tempoAtual == tempoMedido){
-                    tempoMedido=(System.currentTimeMillis()-tempoInicial)/10;
+                    tempoMedido=(System.currentTimeMillis()-tempoInicial);
                 }
                 tempoAtual = tempoMedido;
             }
@@ -58,34 +58,20 @@ public class Vagao extends Thread
         
 	private void ExecutaViagem() throws InterruptedException
 	{   
-            
-            int tempo=1500;
-            SemLog.acquire();
-            logMensagem("Vagão partindo.");
-            SemLog.release();
             EmViagem=1;
-            while(tempo !=0){
-                if(ancVagao.getLayoutX() != xInicial+500){
-                    ancVagao.setLayoutX( ancVagao.getLayoutX() + 1);
-                }
-                mySleep(1);
-                tempo--;
+            while(ancVagao.getLayoutX() != xInicial+500){
+                ancVagao.setLayoutX( ancVagao.getLayoutX() + 1 );
+                mySleep(TempoViagem);
             }
-            tempo=1500;
+
             ancVagao.setLayoutX(xInicial-500);
             
-            while(tempo !=0){
-                if(ancVagao.getLayoutX() != xInicial){
-                    ancVagao.setLayoutX( ancVagao.getLayoutX() + 1 );
-                }
-                mySleep(1);
-                tempo--;
+            while(ancVagao.getLayoutX() != xInicial){
+                ancVagao.setLayoutX( ancVagao.getLayoutX() + 1 );
+                mySleep(TempoViagem);
             }
-            EmViagem = 0;
             ancVagao.setLayoutX(xInicial);
-            SemLog.acquire();
-            logMensagem("Vagão chegou.");
-            SemLog.release();
+            EmViagem = 0;
         }
 	
 	
@@ -103,11 +89,14 @@ public class Vagao extends Thread
 				this.SemaforoVagao.acquire();
                                 
                                 SemLog.acquire();
-                                logMensagem("Vagão acordou.");
+                                logMensagem("Vagão partindo.");
                                 SemLog.release();
                                 EmViagem = 1;
                                 this.ExecutaViagem();
                                 EmViagem = 0;
+                                SemLog.acquire();
+                                logMensagem("Vagão chegou.");
+                                SemLog.release();
 				
 			}
 			catch(InterruptedException exc)
