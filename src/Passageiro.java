@@ -223,7 +223,6 @@ public class Passageiro extends Thread {
 
 	private void CurtirViagem() throws InterruptedException
 	{
-            int tempo = 300;
             while( vagao.EmViagem == 1){ 
                 Platform.runLater(()->{
                     img.setScaleX(0.8);
@@ -273,7 +272,6 @@ public class Passageiro extends Thread {
 				else
 				{
 					this.SemaforoMutex.release();
-					this.vagao.EmViagem=1;
                                         SemLog.acquire();
                                         logMensagem(this.nome+" acordou o vagão.");
                                         SemLog.release();
@@ -282,7 +280,9 @@ public class Passageiro extends Thread {
                                 SemLog.acquire();
                                 logMensagem(this.nome+" curtindo a viagem");
                                 SemLog.release();
+                                vagao.EmViagem=1;
                                 this.CurtirViagem();
+                                vagao.EmViagem=0;
 				this.SemaforoMutex.acquire();
 				this.vagao.CadeirasOcupadas--;
 				this.Desembarque();

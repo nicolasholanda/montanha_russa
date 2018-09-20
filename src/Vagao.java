@@ -95,8 +95,9 @@ public class Vagao extends Thread
                                 SemLog.acquire();
                                 logMensagem("Vagão partindo.");
                                 SemLog.release();
+                                EmViagem=1;
                                 this.ExecutaViagem();
-                                EmViagem = 0;
+                                EmViagem=0;
                                 SemLog.acquire();
                                 logMensagem("Vagão chegou.");
                                 SemLog.release();
