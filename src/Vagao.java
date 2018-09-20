@@ -68,7 +68,7 @@ public class Vagao extends Thread
 
             ancVagao.setLayoutX(xInicial-500);
             
-            while(ancVagao.getLayoutX() != xInicial && EmViagem==1){
+            while(ancVagao.getLayoutX()!=xInicial){
                 Platform.runLater(()->{
                     ancVagao.setLayoutX( ancVagao.getLayoutX() + 1 );
                 });
