@@ -58,7 +58,8 @@ public class Vagao extends Thread
         
 	private void ExecutaViagem() throws InterruptedException
 	{   
-            while(ancVagao.getLayoutX() != xInicial+500){
+            EmViagem = 1;
+            while(ancVagao.getLayoutX() != xInicial+500 && EmViagem==1){
                 Platform.runLater(()->{
                     ancVagao.setLayoutX( ancVagao.getLayoutX() + 1 );
                 });
@@ -67,13 +68,14 @@ public class Vagao extends Thread
 
             ancVagao.setLayoutX(xInicial-500);
             
-            while(ancVagao.getLayoutX() != xInicial){
+            while(ancVagao.getLayoutX() != xInicial && EmViagem==1){
                 Platform.runLater(()->{
                     ancVagao.setLayoutX( ancVagao.getLayoutX() + 1 );
                 });
                 mySleep(TempoViagem);
             }
             ancVagao.setLayoutX(xInicial);
+            EmViagem=0;
         }
 	
 	
@@ -93,7 +95,6 @@ public class Vagao extends Thread
                                 SemLog.acquire();
                                 logMensagem("Vagão partindo.");
                                 SemLog.release();
-                                EmViagem = 1;
                                 this.ExecutaViagem();
                                 EmViagem = 0;
                                 SemLog.acquire();

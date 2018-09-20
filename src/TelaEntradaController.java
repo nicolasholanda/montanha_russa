@@ -124,13 +124,21 @@ public class TelaEntradaController implements Initializable {
     @FXML
     private void addPassageiro(){
         if( parque.vagao != null && parque.SemPassageiro!=null ){
-            parque.qtd_passageiros++;
-            String nome = Integer.toString(parque.qtd_passageiros);
-            int tempo_embarque = Integer.parseInt( txtTempoEmbarque.getText() );
-            int tempo_desembarque = Integer.parseInt( txtTempoDesembarque.getText() );
-            parque.cria_passageiro(nome, tempo_embarque, tempo_desembarque, txtLog, imgs_passageiros[parque.qtd_passageiros-1], ancVagao, ancMapa);
-            if(parque.qtd_passageiros == 9){
-                btAddPassageiro.setDisable(true);
+            try{
+                parque.qtd_passageiros++;
+                String nome = Integer.toString(parque.qtd_passageiros);
+                int tempo_embarque = Integer.parseInt( txtTempoEmbarque.getText() );
+                int tempo_desembarque = Integer.parseInt( txtTempoDesembarque.getText() );
+                if( tempo_desembarque<=0 || tempo_embarque<=0 ){
+                    throw new NumberFormatException();
+                }
+                parque.cria_passageiro(nome, tempo_embarque, tempo_desembarque, txtLog, imgs_passageiros[parque.qtd_passageiros-1], ancVagao, ancMapa);
+                if(parque.qtd_passageiros == 9){
+                    btAddPassageiro.setDisable(true);
+                }
+            }
+            catch(NumberFormatException e){
+                logMensagem("Valores inválidos para passageiro");
             }
         }
         else{
@@ -141,18 +149,26 @@ public class TelaEntradaController implements Initializable {
     
     @FXML
     private void addVagao(){
-        int cap_max = Integer.parseInt(txtCapacidade.getText());
-        int tempo = Integer.parseInt(txtTempoViagem.getText());
-        logMensagem("O vagão foi instanciado.");
-        ancVagao.getChildren().add( imgs_vagao[cap_max-1] );
-        imgs_vagao[cap_max-1].setLayoutX(220.0 - (cap_max-1)*48);
-        imgs_vagao[cap_max-1].setLayoutY(10.0);
-        imgs_vagao[cap_max-1].setVisible(true);
-        parque.cria_vagao(cap_max, tempo, ancVagao, txtLog);
-        btAddPassageiro.setDisable(false);
-        txtTempoEmbarque.setDisable(false);
-        txtTempoDesembarque.setDisable(false);
-        btAddVagao.setDisable(true);
+        try{
+            int cap_max = Integer.parseInt(txtCapacidade.getText());
+            int tempo = Integer.parseInt(txtTempoViagem.getText());
+            if( !(cap_max>=1 && cap_max<=5) || tempo<=0 ){
+                throw new NumberFormatException();
+            }
+            logMensagem("O vagão foi instanciado.");
+            ancVagao.getChildren().add( imgs_vagao[cap_max-1] );
+            imgs_vagao[cap_max-1].setLayoutX(220.0 - (cap_max-1)*48);
+            imgs_vagao[cap_max-1].setLayoutY(10.0);
+            imgs_vagao[cap_max-1].setVisible(true);
+            parque.cria_vagao(cap_max, tempo, ancVagao, txtLog);
+            btAddPassageiro.setDisable(false);
+            txtTempoEmbarque.setDisable(false);
+            txtTempoDesembarque.setDisable(false);
+            btAddVagao.setDisable(true);
+        }
+        catch(NumberFormatException e){
+            logMensagem("Valores inválidos para vagão.");
+        }
     }
     
     public void logMensagem(String msg){
