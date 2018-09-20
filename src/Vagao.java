@@ -58,20 +58,38 @@ public class Vagao extends Thread
         
 	private void ExecutaViagem() throws InterruptedException
 	{   
-            EmViagem=1;
-            while(ancVagao.getLayoutX() != xInicial+500){
-                ancVagao.setLayoutX( ancVagao.getLayoutX() + 1 );
-                mySleep(TempoViagem);
-            }
-
-            ancVagao.setLayoutX(xInicial-500);
+            move_trem1 = new PathTransition();
+            move_trem1.setNode(ancVagao);
+            move_trem1.setDuration( Duration.seconds( TempoViagem/2 ) );
             
-            while(ancVagao.getLayoutX() != xInicial){
-                ancVagao.setLayoutX( ancVagao.getLayoutX() + 1 );
-                mySleep(TempoViagem);
+            move_trem2 = new PathTransition();
+            move_trem2.setNode(ancVagao);
+            move_trem2.setDuration( Duration.seconds( TempoViagem/2 ) );
+            
+            Polyline line = new Polyline(
+                xInicial-30, yInicial-30,
+                xInicial + 500, yInicial-30
+            );
+            Polyline line2 = new Polyline(
+                xInicial-500, yInicial-30,
+                xInicial-30, yInicial-30
+            );
+            this.move_trem1.setPath(line);
+            this.move_trem2.setPath(line2);
+
+            this.move_trem1.play();
+            
+            while(move_trem1.getStatus() == Animation.Status.RUNNING){
+                //código qualquer cpu bound
+                System.out.println(move_trem1.getStatus());
             }
-            ancVagao.setLayoutX(xInicial);
-            EmViagem = 0;
+            
+            this.move_trem2.play();
+            
+            while(move_trem2.getStatus() == Animation.Status.RUNNING){
+                //código qualquer cpu bound
+                System.out.println(move_trem2.getStatus());
+            }
         }
 	
 	
