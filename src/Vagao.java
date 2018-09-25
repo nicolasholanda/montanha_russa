@@ -47,35 +47,31 @@ public class Vagao extends Thread
         }
         
 	private static void mySleep(int tempo){
-            long tempoInicial = System.currentTimeMillis(), tempoMedido=0, tempoAtual=0;
-            while(tempoAtual < tempo){
-                while(tempoAtual == tempoMedido){
-                    tempoMedido=(System.currentTimeMillis()-tempoInicial);
-                }
-                tempoAtual = tempoMedido;
+            long tempoInicial = System.currentTimeMillis();
+            long tempofinal=tempoInicial+tempo;
+            while(System.currentTimeMillis()<tempofinal){
+                
             }
         }
         
 	private void ExecutaViagem() throws InterruptedException
 	{   
-            int tempo=0;
+            long tempoFinal=System.currentTimeMillis()+(TempoViagem/2)*1000;
             EmViagem = 1;
-            while(tempo<500){
+            while(System.currentTimeMillis()<tempoFinal){
                 Platform.runLater(()->{
                     ancVagao.setLayoutX( ancVagao.getLayoutX() + 1 );
                 });
                 mySleep(TempoViagem);
-                tempo++;
             }
-
+            
             ancVagao.setLayoutX(xInicial-500);
-            tempo=0;
-            while(tempo<500){
+            tempoFinal=System.currentTimeMillis()+(TempoViagem/2)*1000;
+            while(System.currentTimeMillis()<tempoFinal){
                 Platform.runLater(()->{
                     ancVagao.setLayoutX( ancVagao.getLayoutX() + 1 );
                 });
                 mySleep(TempoViagem);
-                tempo++;
             }
             ancVagao.setLayoutX(xInicial);
             EmViagem=0;
