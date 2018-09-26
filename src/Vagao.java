@@ -4,6 +4,7 @@ import java.util.concurrent.Semaphore;
 import javafx.animation.Animation;
 import javafx.animation.PathTransition;
 import javafx.application.Platform;
+import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polyline;
@@ -22,8 +23,10 @@ public class Vagao extends Thread
         PathTransition move_trem2;
         double xInicial;
         double yInicial;
+        boolean vivo=true;
+        Pane ancMapa;
 	
-	public Vagao(int Capacidade, int TempoViagem, Semaphore Vagao, Semaphore Mutex, Pane ancVagao, Semaphore SemLog, TextArea txtLog) 
+	public Vagao(int Capacidade, int TempoViagem, Semaphore Vagao, Semaphore Mutex, Pane ancVagao, Semaphore SemLog, TextArea txtLog, Pane ancMapa) 
 	{
 		// TODO Auto-generated constructor stub
 		this.Capacidade=Capacidade;
@@ -37,6 +40,7 @@ public class Vagao extends Thread
                 this.yInicial = ancVagao.getLayoutY();
                 this.SemLog = SemLog;
                 this.txtLog = txtLog;
+                this.ancMapa = ancMapa;
 	}
         
         private void logMensagem(String msg){
@@ -56,6 +60,7 @@ public class Vagao extends Thread
         
 	private void ExecutaViagem() throws InterruptedException
 	{   
+            ancVagao.setLayoutX(xInicial);
             long tempoFinal=System.currentTimeMillis()+(TempoViagem/2)*1000;
             EmViagem = 1;
             while(System.currentTimeMillis()<tempoFinal){
@@ -81,7 +86,7 @@ public class Vagao extends Thread
 	@Override
 	public void run()
 	{
-		while(true)
+		while(vivo)
 		{
 			try
 			{
@@ -90,12 +95,15 @@ public class Vagao extends Thread
                                 SemLog.release();
                                 
 				this.SemaforoVagao.acquire();
-                                
+                                if(!vivo){
+                                    break;
+                                }
                                 SemLog.acquire();
                                 logMensagem("Vagão partindo.");
                                 SemLog.release();
                                 EmViagem=1;
                                 this.ExecutaViagem();
+                                ancVagao.setLayoutX(xInicial);
                                 EmViagem=0;
                                 SemLog.acquire();
                                 logMensagem("Vagão chegou.");
@@ -107,6 +115,12 @@ public class Vagao extends Thread
 				System.out.println(exc);
 			}
 		}
+                Platform.runLater(()->{
+                    Node img = ancVagao.getChildren().get(0);
+                    img.setVisible(false);
+                    ancMapa.getChildren().add(img);
+                    ancVagao.getChildren().clear();
+                });
 	}
 
 }
