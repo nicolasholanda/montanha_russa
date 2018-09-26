@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane fx:id="ancPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="701.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="TelaEntradaController">
+   <children>
+      <TextArea fx:id="txtLog" editable="false" focusTraversable="false" layoutX="8.0" layoutY="541.0" prefHeight="84.0" prefWidth="327.0" />
+      <Button fx:id="btAddPassageiro" disable="true" layoutX="422.0" layoutY="597.0" mnemonicParsing="false" onAction="#addPassageiro" text="Criar Pessoa" />
+      <TextField fx:id="txtId" layoutX="509.0" layoutY="572.0" prefHeight="25.0" prefWidth="81.0" promptText="ID passageiro" />
+      <Button fx:id="btMatarPassageiro" layoutX="509.0" layoutY="597.0" mnemonicParsing="false" onAction="#matarPassageiro" text="Matar pessoa" prefWidth="81.0" />
+      <Button fx:id="btMatarVagao" layoutX="596.0" layoutY="597.0" mnemonicParsing="false" onAction="#matarVagao" text="Matar vagão" prefWidth="81.0" />
+      <TextField fx:id="txtTempoEmbarque" disable="true" layoutX="422.0" layoutY="572.0" prefHeight="25.0" prefWidth="81.0" promptText="Embarque" />
+      <TextField fx:id="txtTempoDesembarque" disable="true" layoutX="422.0" layoutY="541.0" prefHeight="25.0" prefWidth="81.0" promptText="Desembarque" />
+      <Pane fx:id="ancMapa" layoutY="2.0" prefHeight="539.0" prefWidth="701.0">
+         <children>
+            <ImageView fx:id="imgParque" fitHeight="555.0" fitWidth="701.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@imagens/parque.png" />
+               </image>
+            </ImageView>
+            <Pane fx:id="ancVagao" layoutX="186.0" layoutY="70.0" prefHeight="73.0" prefWidth="300.0" />
+            <ImageView fx:id="imgVagao1" fitHeight="42.0" fitWidth="77.0" layoutX="605.0" layoutY="245.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@imagens/vagao_1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgVagao2" fitHeight="53.0" fitWidth="120.0" layoutX="553.0" layoutY="287.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@imagens/vagao_2.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgVagao3" fitHeight="48.0" fitWidth="174.0" layoutX="499.0" layoutY="329.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@imagens/vagao_3.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgVagao4" fitHeight="54.0" fitWidth="220.0" layoutX="453.0" layoutY="373.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@imagens/vagao_4.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgVagao5" fitHeight="42.0" fitWidth="277.0" layoutX="410.0" layoutY="450.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@imagens/vagao_5.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgLeao1" fitHeight="54.0" fitWidth="41.0" layoutX="167.0" layoutY="471.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@imagens/leao1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgLeao2" fitHeight="54.0" fitWidth="41.0" layoutX="167.0" layoutY="471.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@imagens/leao2.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgLeao3" fitHeight="54.0" fitWidth="41.0" layoutX="167.0" layoutY="471.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@imagens/leao3.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgLeao4" fitHeight="54.0" fitWidth="41.0" layoutX="167.0" layoutY="471.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@imagens/leao4.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgLeao5" fitHeight="54.0" fitWidth="41.0" layoutX="167.0" layoutY="471.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@imagens/leao5.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgLeao6" fitHeight="54.0" fitWidth="41.0" layoutX="167.0" layoutY="471.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@imagens/leao6.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgLeao7" fitHeight="54.0" fitWidth="41.0" layoutX="167.0" layoutY="471.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@imagens/leao7.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgLeao8" fitHeight="54.0" fitWidth="41.0" layoutX="167.0" layoutY="471.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@imagens/leao8.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgLeao9" fitHeight="54.0" fitWidth="41.0" layoutX="167.0" layoutY="471.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@imagens/leao9.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgLeao10" fitHeight="54.0" fitWidth="41.0" layoutX="167.0" layoutY="471.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@imagens/leao10.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <TextField fx:id="txtTempoViagem" layoutX="335.0" layoutY="541.0" prefHeight="25.0" prefWidth="81.0" promptText="Viagem" />
+      <TextField fx:id="txtCapacidade" layoutX="335.0" layoutY="572.0" prefHeight="25.0" prefWidth="81.0" promptText="Capacidade" />
+      <Button fx:id="btAddVagao" layoutX="335.0" layoutY="597.0" mnemonicParsing="false" onAction="#addVagao" prefHeight="25.0" prefWidth="81.0" text="Criar Vagão" />
+   </children>
+</Pane>

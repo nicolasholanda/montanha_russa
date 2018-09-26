@@ -23,6 +23,8 @@ public class Passageiro extends Thread {
         Pane ancVagao;
         Pane ancMapa;
         int banco;
+        boolean podeApagar = true;
+        boolean vivo=true;
         
 	
 	public Passageiro(String nome, int TempoEmbarque, int TempoDesembarque,
@@ -180,6 +182,7 @@ public class Passageiro extends Thread {
 	
 	private void Desembarque()
 	{
+            ancVagao.setLayoutX(186);
             Platform.runLater(()->{
                 ancVagao.getChildren().remove(img);
                 ancMapa.getChildren().add(img);
@@ -223,7 +226,6 @@ public class Passageiro extends Thread {
 
 	private void CurtirViagem() throws InterruptedException
 	{
-            int tempo = 300;
             while( vagao.EmViagem == 1){ 
                 Platform.runLater(()->{
                     img.setScaleX(0.8);
@@ -242,11 +244,12 @@ public class Passageiro extends Thread {
 	@Override
 	public void run()
 	{       
+                podeApagar=true;
                 img.setVisible(true);
 		entrada_p_fila();
                 System.out.println("pog");
-                
-		while(true)
+
+		while(this.vivo)
 		{
 			try
 			{
@@ -255,8 +258,13 @@ public class Passageiro extends Thread {
                                 SemLog.release();
 				this.SemaforoPassageiro.acquire();
 				this.SemaforoMutex.acquire();
+                                if(!vivo){
+                                    this.SemaforoPassageiro.release();
+                                    this.SemaforoMutex.release();
+                                    break;
+                                }
+                                podeApagar=false;
 				this.Embarca();
-                                
                                 this.vagao.CadeirasOcupadas++;
                                 SemLog.acquire();
                                 logMensagem(this.nome+" embarcou.");
@@ -273,7 +281,6 @@ public class Passageiro extends Thread {
 				else
 				{
 					this.SemaforoMutex.release();
-					this.vagao.EmViagem=1;
                                         SemLog.acquire();
                                         logMensagem(this.nome+" acordou o vagão.");
                                         SemLog.release();
@@ -282,9 +289,12 @@ public class Passageiro extends Thread {
                                 SemLog.acquire();
                                 logMensagem(this.nome+" curtindo a viagem");
                                 SemLog.release();
+                                vagao.EmViagem=1;
                                 this.CurtirViagem();
+                                vagao.EmViagem=0;
 				this.SemaforoMutex.acquire();
 				this.vagao.CadeirasOcupadas--;
+                                podeApagar=true;
 				this.Desembarque();
                                 SemLog.acquire();
                                 logMensagem(this.nome+" desembarcou.");
@@ -301,6 +311,11 @@ public class Passageiro extends Thread {
 			}
 			
 		}
+                Platform.runLater(()->{
+                    img.setVisible(false);
+                    img.setLayoutX(167);
+                    img.setLayoutY(471);
+                });
+                logMensagem(nome+" foi excluída.");
 	}
-
 }

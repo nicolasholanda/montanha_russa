@@ -12,6 +12,9 @@
    <children>
       <TextArea fx:id="txtLog" editable="false" focusTraversable="false" layoutX="8.0" layoutY="541.0" prefHeight="84.0" prefWidth="327.0" />
       <Button fx:id="btAddPassageiro" disable="true" layoutX="422.0" layoutY="597.0" mnemonicParsing="false" onAction="#addPassageiro" text="Criar Pessoa" />
+      <TextField fx:id="txtId" layoutX="509.0" layoutY="572.0" prefHeight="25.0" prefWidth="81.0" promptText="ID passageiro" />
+      <Button fx:id="btMatarPassageiro" layoutX="509.0" layoutY="597.0" mnemonicParsing="false" onAction="#matarPassageiro" text="Matar pessoa" prefWidth="81.0" />
+      <Button fx:id="btMatarVagao" layoutX="596.0" layoutY="597.0" mnemonicParsing="false" onAction="#matarVagao" text="Matar vagão" prefWidth="81.0" />
       <TextField fx:id="txtTempoEmbarque" disable="true" layoutX="422.0" layoutY="572.0" prefHeight="25.0" prefWidth="81.0" promptText="Embarque" />
       <TextField fx:id="txtTempoDesembarque" disable="true" layoutX="422.0" layoutY="541.0" prefHeight="25.0" prefWidth="81.0" promptText="Desembarque" />
       <Pane fx:id="ancMapa" layoutY="2.0" prefHeight="539.0" prefWidth="701.0">

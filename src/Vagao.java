@@ -1,12 +1,10 @@
 import java.time.LocalDateTime;
-import javafx.util.Duration;
 import java.util.concurrent.Semaphore;
-import javafx.animation.Animation;
 import javafx.animation.PathTransition;
 import javafx.application.Platform;
+import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Polyline;
 public class Vagao extends Thread
 {
 	public Semaphore SemaforoVagao;
@@ -22,8 +20,10 @@ public class Vagao extends Thread
         PathTransition move_trem2;
         double xInicial;
         double yInicial;
+        boolean vivo=true;
+        Pane ancMapa;
 	
-	public Vagao(int Capacidade, int TempoViagem, Semaphore Vagao, Semaphore Mutex, Pane ancVagao, Semaphore SemLog, TextArea txtLog) 
+	public Vagao(int Capacidade, int TempoViagem, Semaphore Vagao, Semaphore Mutex, Pane ancVagao, Semaphore SemLog, TextArea txtLog, Pane ancMapa) 
 	{
 		// TODO Auto-generated constructor stub
 		this.Capacidade=Capacidade;
@@ -37,6 +37,7 @@ public class Vagao extends Thread
                 this.yInicial = ancVagao.getLayoutY();
                 this.SemLog = SemLog;
                 this.txtLog = txtLog;
+                this.ancMapa = ancMapa;
 	}
         
         private void logMensagem(String msg){
@@ -47,56 +48,43 @@ public class Vagao extends Thread
         }
         
 	private static void mySleep(int tempo){
-            long tempoInicial = System.currentTimeMillis(), tempoMedido=0, tempoAtual=0;
-            while(tempoAtual < tempo){
-                while(tempoAtual == tempoMedido){
-                    tempoMedido=(System.currentTimeMillis()-tempoInicial);
-                }
-                tempoAtual = tempoMedido;
+            long tempoInicial = System.currentTimeMillis();
+            long tempofinal=tempoInicial+tempo;
+            while(System.currentTimeMillis()<tempofinal){
+                
             }
         }
         
 	private void ExecutaViagem() throws InterruptedException
 	{   
-            move_trem1 = new PathTransition();
-            move_trem1.setNode(ancVagao);
-            move_trem1.setDuration( Duration.seconds( TempoViagem/2 ) );
+            ancVagao.setLayoutX(xInicial);
+            long tempoFinal=System.currentTimeMillis()+(TempoViagem/2)*1000;
+            EmViagem = 1;
+            while(System.currentTimeMillis()<tempoFinal){
+                Platform.runLater(()->{
+                    ancVagao.setLayoutX( ancVagao.getLayoutX() + 1 );
+                });
+                mySleep(TempoViagem);
+            }
             
-            move_trem2 = new PathTransition();
-            move_trem2.setNode(ancVagao);
-            move_trem2.setDuration( Duration.seconds( TempoViagem/2 ) );
-            
-            Polyline line = new Polyline(
-                xInicial-30, yInicial-30,
-                xInicial + 500, yInicial-30
-            );
-            Polyline line2 = new Polyline(
-                xInicial-500, yInicial-30,
-                xInicial-30, yInicial-30
-            );
-            this.move_trem1.setPath(line);
-            this.move_trem2.setPath(line2);
+            ancVagao.setLayoutX(xInicial-500);
+            tempoFinal=System.currentTimeMillis()+(TempoViagem/2)*1000;
+            while(System.currentTimeMillis()<tempoFinal){
+                Platform.runLater(()->{
+                    ancVagao.setLayoutX( ancVagao.getLayoutX() + 1 );
+                });
+                mySleep(TempoViagem);
+            }
+            ancVagao.setLayoutX(xInicial);
+            EmViagem=0;
 
-            this.move_trem1.play();
-            
-            while(move_trem1.getStatus() == Animation.Status.RUNNING){
-                //código qualquer cpu bound
-                System.out.println(move_trem1.getStatus());
-            }
-            
-            this.move_trem2.play();
-            
-            while(move_trem2.getStatus() == Animation.Status.RUNNING){
-                //código qualquer cpu bound
-                System.out.println(move_trem2.getStatus());
-            }
         }
 	
 	
 	@Override
 	public void run()
 	{
-		while(true)
+		while(vivo)
 		{
 			try
 			{
@@ -105,13 +93,16 @@ public class Vagao extends Thread
                                 SemLog.release();
                                 
 				this.SemaforoVagao.acquire();
-                                
+                                if(!vivo){
+                                    break;
+                                }
                                 SemLog.acquire();
                                 logMensagem("Vagão partindo.");
                                 SemLog.release();
-                                EmViagem = 1;
+                                EmViagem=1;
                                 this.ExecutaViagem();
-                                EmViagem = 0;
+                                ancVagao.setLayoutX(xInicial);
+                                EmViagem=0;
                                 SemLog.acquire();
                                 logMensagem("Vagão chegou.");
                                 SemLog.release();
@@ -122,6 +113,12 @@ public class Vagao extends Thread
 				System.out.println(exc);
 			}
 		}
+                Platform.runLater(()->{
+                    Node img = ancVagao.getChildren().get(0);
+                    img.setVisible(false);
+                    ancMapa.getChildren().add(img);
+                    ancVagao.getChildren().clear();
+                });
 	}
 
 }
