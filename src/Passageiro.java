@@ -258,52 +258,53 @@ public class Passageiro extends Thread {
                                 SemLog.release();
 				this.SemaforoPassageiro.acquire();
 				this.SemaforoMutex.acquire();
-                                if(!vivo){
+                                if(vivo){
+                                    podeApagar=false;
+                                    this.Embarca();
+                                    this.vagao.CadeirasOcupadas++;
+                                    SemLog.acquire();
+                                    logMensagem(this.nome+" embarcou.");
+                                    SemLog.release();
+
+                                    if(this.vagao.CadeirasOcupadas<this.vagao.Capacidade)
+                                    {
+                                            this.SemaforoMutex.release();
+                                            SemLog.acquire();
+                                            logMensagem(this.nome+" aguarda no vagão.");
+                                            SemLog.release();
+                                            this.SemaforoVagao.acquire();
+                                    }
+                                    else
+                                    {
+                                            this.SemaforoMutex.release();
+                                            SemLog.acquire();
+                                            logMensagem(this.nome+" acordou o vagão.");
+                                            SemLog.release();
+                                            this.SemaforoVagao.release(this.vagao.Capacidade);
+                                    }
+                                    SemLog.acquire();
+                                    logMensagem(this.nome+" curtindo a viagem");
+                                    SemLog.release();
+                                    vagao.EmViagem=1;
+                                    this.CurtirViagem();
+                                    vagao.EmViagem=0;
+                                    this.SemaforoMutex.acquire();
+                                    this.vagao.CadeirasOcupadas--;
+                                    podeApagar=true;
+                                    this.Desembarque();
+                                    SemLog.acquire();
+                                    logMensagem(this.nome+" desembarcou.");
+                                    SemLog.release();
+                                    if(this.vagao.CadeirasOcupadas==0)
+                                    {
+                                            this.SemaforoPassageiro.release(this.vagao.Capacidade);
+                                    }
+                                    this.SemaforoMutex.release();
+                                }
+                                else{
                                     this.SemaforoPassageiro.release();
                                     this.SemaforoMutex.release();
-                                    break;
                                 }
-                                podeApagar=false;
-				this.Embarca();
-                                this.vagao.CadeirasOcupadas++;
-                                SemLog.acquire();
-                                logMensagem(this.nome+" embarcou.");
-                                SemLog.release();
-                                
-				if(this.vagao.CadeirasOcupadas<this.vagao.Capacidade)
-				{
-					this.SemaforoMutex.release();
-					SemLog.acquire();
-                                        logMensagem(this.nome+" aguarda no vagão.");
-                                        SemLog.release();
-					this.SemaforoVagao.acquire();
-				}
-				else
-				{
-					this.SemaforoMutex.release();
-                                        SemLog.acquire();
-                                        logMensagem(this.nome+" acordou o vagão.");
-                                        SemLog.release();
-					this.SemaforoVagao.release(this.vagao.Capacidade);
-				}
-                                SemLog.acquire();
-                                logMensagem(this.nome+" curtindo a viagem");
-                                SemLog.release();
-                                vagao.EmViagem=1;
-                                this.CurtirViagem();
-                                vagao.EmViagem=0;
-				this.SemaforoMutex.acquire();
-				this.vagao.CadeirasOcupadas--;
-                                podeApagar=true;
-				this.Desembarque();
-                                SemLog.acquire();
-                                logMensagem(this.nome+" desembarcou.");
-                                SemLog.release();
-				if(this.vagao.CadeirasOcupadas==0)
-				{
-					this.SemaforoPassageiro.release(this.vagao.Capacidade);
-				}
-				this.SemaforoMutex.release();
 			}
 			catch(InterruptedException exc)
 			{
